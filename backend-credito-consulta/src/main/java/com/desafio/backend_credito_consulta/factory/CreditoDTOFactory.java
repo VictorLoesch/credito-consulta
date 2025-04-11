@@ -21,4 +21,21 @@ public class CreditoDTOFactory {
                 credito.getBaseCalculo()
         );
     }
+
+    public static Credito toEntity(CreditoDTO dto) {
+        return new Credito(
+            dto.getNumeroCredito(),
+            dto.getNumeroNfse(),
+            dto.getDataConstituicao(),
+            dto.getValorIssqn(),
+            dto.getTipoCredito(),
+            "Sim".equalsIgnoreCase(dto.getSimplesNacional()),
+            dto.getAliquota(),
+            dto.getValorFaturado(),
+            dto.getValorDeducao(),
+            dto.getBaseCalculo());
+    }
+
+
+
 }

@@ -141,5 +141,19 @@ public class Credito {
                 ", baseCalculo=" + baseCalculo +
                 '}';
     }
+
+    public Credito(String numeroCredito, String numeroNfse, LocalDate dataConstituicao, BigDecimal valorIssqn, String tipoCredito, boolean simplesNacional, BigDecimal aliquota, BigDecimal valorFaturado, BigDecimal valorDeducao, BigDecimal baseCalculo) {
+        this.id = id;
+        this.numeroCredito = numeroCredito;
+        this.numeroNfse = numeroNfse;
+        this.dataConstituicao = dataConstituicao;
+        this.valorIssqn = valorIssqn;
+        this.tipoCredito = tipoCredito;
+        this.simplesNacional = simplesNacional;
+        this.aliquota = aliquota;
+        this.valorFaturado = valorFaturado;
+        this.valorDeducao = valorDeducao;
+        this.baseCalculo = baseCalculo;
+    }
 }
 
