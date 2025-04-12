@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -29,13 +30,13 @@ public class CreditoController {
     }
 
     @PostMapping
-    public ResponseEntity<CreditoDTO> criar(@RequestBody CreditoDTO dto) {
+    public ResponseEntity<CreditoDTO> criar(@RequestBody @Valid CreditoDTO dto) {
         CreditoDTO criado = service.salvarCredito(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(criado);
     }
 
     @PutMapping("/{numeroCredito}")
-    public ResponseEntity<CreditoDTO> atualizar(@PathVariable String numeroCredito, @RequestBody CreditoDTO dto) {
+    public ResponseEntity<CreditoDTO> atualizar(@PathVariable String numeroCredito, @RequestBody @Valid CreditoDTO dto) {
         CreditoDTO atualizado = service.atualizarCredito(numeroCredito, dto);
         return ResponseEntity.status(HttpStatus.OK).body(atualizado);
     }

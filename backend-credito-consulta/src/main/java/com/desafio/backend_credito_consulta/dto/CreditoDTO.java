@@ -2,18 +2,44 @@ package com.desafio.backend_credito_consulta.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import javax.validation.constraints.*;
+
 
 public class CreditoDTO {
 
+    @NotBlank(message = "O número do crédito é obrigatório")
     private String numeroCredito;
+
+    @NotBlank(message = "O número da NFS-e é obrigatório")
     private String numeroNfse;
+
+    @NotNull(message = "A data de constituição é obrigatória")
     private LocalDate dataConstituicao;
+
+    @NotNull(message = "O valor do ISSQN é obrigatório")
+    @Positive(message = "O valor do ISSQN deve ser positivo")
     private BigDecimal valorIssqn;
+
+    @NotBlank(message = "O tipo de crédito é obrigatório")
     private String tipoCredito;
+
+    @NotBlank(message = "Informe se é Simples Nacional (Sim/Não)")
     private String simplesNacional;
+
+    @NotNull(message = "A alíquota é obrigatória")
+    @DecimalMin(value = "0.0", inclusive = false)
     private BigDecimal aliquota;
+
+    @NotNull(message = "O valor faturado é obrigatório")
+    @Positive
     private BigDecimal valorFaturado;
+
+    @NotNull(message = "O valor de dedução é obrigatório")
+    @PositiveOrZero
     private BigDecimal valorDeducao;
+
+    @NotNull(message = "A base de cálculo é obrigatória")
+    @Positive
     private BigDecimal baseCalculo;
 
     public CreditoDTO() {}
