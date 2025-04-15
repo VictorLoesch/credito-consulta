@@ -4,6 +4,7 @@ import com.desafio.backend_credito_consulta.Entity.Credito;
 import com.desafio.backend_credito_consulta.dto.CreditoDTO;
 import com.desafio.backend_credito_consulta.exception.CreditoNotFoundException;
 import com.desafio.backend_credito_consulta.repository.CreditoRepository;
+import com.desafio.backend_credito_consulta.service.ConsultaKafkaPublisher;
 import com.desafio.backend_credito_consulta.service.CreditoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,11 +28,13 @@ public class CreditoServiceTest {
     @Mock
     private CreditoRepository creditoRepository;
 
+    @Mock
+    private ConsultaKafkaPublisher publisher;
+
     @InjectMocks
     private CreditoService creditoService;
 
     private Credito credito;
-
 
     @BeforeEach
     void setUp() {
@@ -44,35 +47,43 @@ public class CreditoServiceTest {
     @Test
     void deveRetornarListaCreditoDTOQuandoBuscarPorNfse() {
         when(creditoRepository.findByNumeroNfse("NFSE123")).thenReturn(Collections.singletonList(credito));
+        doNothing().when(publisher).publicarEventoConsulta(anyString());
         List<CreditoDTO> resultado = creditoService.consultarPorNfse("NFSE123");
         assertEquals(1, resultado.size());
         assertEquals("NFSE123",resultado.get(0).getNumeroNfse());
         verify(creditoRepository).findByNumeroNfse("NFSE123");
+        verify(publisher).publicarEventoConsulta(anyString());
     }
 
     @Test
     void deveRetornarListaVaziaQuandoBuscarPorNfseInexistente() {
         when(creditoRepository.findByNumeroNfse("NFSE9")).thenReturn(Collections.emptyList());
+        doNothing().when(publisher).publicarEventoConsulta(anyString());
         List<CreditoDTO> resultado = creditoService.consultarPorNfse("NFSE9");
         assertTrue(resultado.isEmpty(), "A lista deve estar vazia");
         verify(creditoRepository).findByNumeroNfse("NFSE9");
+        verify(publisher).publicarEventoConsulta(anyString());
     }
 
     @Test
     void deveRetornarCreditoDTOQuandoBuscarPorNumeroCredito() {
         when(creditoRepository.findByNumeroCredito("CRED001")).thenReturn(Optional.of(credito));
+        doNothing().when(publisher).publicarEventoConsulta(anyString());
         CreditoDTO dto = creditoService.consultarPorNumeroCredito("CRED001");
         assertEquals("CRED001", dto.getNumeroCredito());
         verify(creditoRepository).findByNumeroCredito("CRED001");
+        verify(publisher).publicarEventoConsulta(anyString());
     }
 
     @Test
     void deveLancarExcecaoQuandoBuscarPorNumeroCreditoInexistente() {
         when(creditoRepository.findByNumeroCredito("000")).thenReturn(Optional.empty());
+        doNothing().when(publisher).publicarEventoConsulta(anyString());
         CreditoNotFoundException ex =  assertThrows(
                 CreditoNotFoundException.class, () -> creditoService.consultarPorNumeroCredito("000"));
         assertEquals("Crédito não encontrado",ex.getMessage());
         verify(creditoRepository).findByNumeroCredito("000");
+        verify(publisher).publicarEventoConsulta(anyString());
     }
 
     @Test
@@ -87,9 +98,6 @@ public class CreditoServiceTest {
         assertEquals("CRED001", salvo.getNumeroCredito());
         verify(creditoRepository).save(any(Credito.class));
     }
-
-
-
 
     @Test
     void deveAtualizarCreditoComSucesso() {
