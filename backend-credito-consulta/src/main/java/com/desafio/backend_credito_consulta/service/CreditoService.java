@@ -14,16 +14,20 @@ import java.util.stream.Collectors;
 public class CreditoService {
 
     private final CreditoRepository repository;
+    private final ConsultaKafkaPublisher kafkaPublisher;
 
-    public CreditoService(CreditoRepository repository) {
+    public CreditoService(CreditoRepository repository, ConsultaKafkaPublisher kafkaPublisher) {
         this.repository = repository;
+        this.kafkaPublisher = kafkaPublisher;
     }
 
     public List<CreditoDTO> consultarPorNfse(String numeroNfse) {
+        kafkaPublisher.publicarEventoConsulta("Consulta realizada para NFSe: " + numeroNfse);
         return repository.findByNumeroNfse(numeroNfse).stream().map(CreditoDTOFactory::fromEntity).collect(Collectors.toList());
     }
 
     public CreditoDTO consultarPorNumeroCredito(String numeroCredito) {
+        kafkaPublisher.publicarEventoConsulta("Consulta realizada para Credito: " + numeroCredito);
         return repository.findByNumeroCredito(numeroCredito)
                 .map(CreditoDTOFactory::fromEntity)
                 .orElseThrow(() -> new CreditoNotFoundException("Crédito não encontrado"));

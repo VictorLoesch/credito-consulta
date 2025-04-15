@@ -31,6 +31,8 @@
 		<swagger.version>1.6.10</swagger.version>
 		<testcontainers.postgresql>1.19.0</testcontainers.postgresql>
 		<testcontainers.jupiter>1.19.0</testcontainers.jupiter>
+		<rest-assured.version>4.5.1</rest-assured.version>
+		<testcontainers-kafka.version>1.19.0</testcontainers-kafka.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -67,6 +69,10 @@
 			<version>${swagger.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -86,21 +92,28 @@
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
-			<version>4.5.1</version>  <!-- ou mais recente -->
+			<version>${rest-assured.version}</version>  <!-- ou mais recente -->
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>json-path</artifactId>
-			<version>4.5.1</version>
+			<version>${rest-assured.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>json-schema-validator</artifactId>
-			<version>4.5.1</version>
+			<version>${rest-assured.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>kafka</artifactId>
+			<version>${testcontainers-kafka.version}</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
