@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Credito } from '../../core/models/credito.model';
+import { Credito } from '../models/credito.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CreditoService {
-  private apiUrl = 'http://localhost:8080/api/credito';
+  private apiUrl = 'http://localhost:8080/api/creditos';
 
   constructor(private http: HttpClient) {}
 
