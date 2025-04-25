@@ -58,38 +58,14 @@ Aplicação **Angular 17** para consumir uma API REST de créditos, permitindo:
 
 ---
 
-## 📁 Estrutura do Projeto
-
-app-credito-consulta/
-├── src/
-│ ├── app/
-│ │ ├── credito-consulta/
-│ │ │ ├── consulta/ # Busca e listagem (consulta.component.ts/.html/.scss)
-│ │ │ ├── cadastro/ # Criação de crédito (cadastro.component.ts/.html/.scss)
-│ │ │ └── editar/ # Edição de crédito (editar.component.ts/.html/.scss)
-│ │ ├── models/ # Modelos TypeScript (credito.model.ts)
-│ │ └── services/ # Serviço HTTP (credito.service.ts)
-│ ├── app.routes.ts # Rotas: '/', '/cadastro', '/editar/:numeroCredito'
-│ ├── app.config.ts # Providers (HttpClient, Router, Material)
-│ └── main.ts # Bootstrap standalone
-├── angular.json # Configuração Angular CLI
-├── package.json # Dependências & scripts
-├── styles.scss # Estilos globais
-└── Dockerfile # Container multi-stage (build + Nginx)
-
----
-
 ## 🚀 Executando com Docker
 
 1. **Na raiz do projeto** (onde está o `Dockerfile`), copie e cole:
    ```bash
    # 1) Build da imagem Docker
-   docker build -t consulta-credito-frontend:latest .
+   docker build -t consulta-credito-frontend .
    # 2) Iniciar container em background
-   docker run -d \
-     --name consulta-frontend \
-     -p 4200:80 \
-     consulta-credito-frontend:latest
+   docker run -d --name consulta-frontend -p 4200:80 consulta-credito-frontend
    # 3) Abra no navegador
    http://localhost:4200
    ```
