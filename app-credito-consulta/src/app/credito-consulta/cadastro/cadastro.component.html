@@ -1,0 +1,78 @@
+<div class="cadastro-container">
+  <h1 class="titulo">Cadastro de Crédito</h1>
+
+  <form [formGroup]="form" (ngSubmit)="salvar()" class="form-card">
+    <div class="form-grid">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Número do Crédito</mat-label>
+        <input matInput formControlName="numeroCredito" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Número da NFS-e</mat-label>
+        <input matInput formControlName="numeroNfse" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Data de Constituição*</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="dataConstituicao"
+          placeholder="dd/mm/aaaa"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker
+          #picker
+          startView="multi-year"
+          touchUi="true"
+        ></mat-datepicker>
+        <mat-error *ngIf="form.get('dataConstituicao')?.hasError('required')">
+          Data é obrigatória
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Valor ISSQN</mat-label>
+        <input matInput formControlName="valorIssqn" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Tipo de Crédito</mat-label>
+        <input matInput formControlName="tipoCredito" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Simples Nacional (Sim/Não)</mat-label>
+        <input matInput formControlName="simplesNacional" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Alíquota</mat-label>
+        <input matInput formControlName="aliquota" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Valor Faturado</mat-label>
+        <input matInput formControlName="valorFaturado" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Valor Dedução</mat-label>
+        <input matInput formControlName="valorDeducao" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Base de Cálculo</mat-label>
+        <input matInput formControlName="baseCalculo" />
+      </mat-form-field>
+    </div>
+
+    <div class="buttons">
+      <button mat-raised-button color="primary" type="submit">Salvar</button>
+      <button mat-button color="warn" type="button" (click)="voltar()">
+        Cancelar
+      </button>
+    </div>
+  </form>
+</div>

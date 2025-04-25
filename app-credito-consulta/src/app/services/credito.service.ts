@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { Credito } from '../models/credito.model';
 
 @Injectable({
@@ -16,7 +16,9 @@ export class CreditoService {
   }
 
   getPorNumeroCredito(numeroCredito: string): Observable<Credito> {
-    return this.http.get<Credito>(`${this.apiUrl}/credito/${numeroCredito}`);
+    return this.http
+      .get<Credito>(`${this.apiUrl}/credito/${numeroCredito}`)
+      .pipe(catchError((err) => throwError(() => err)));
   }
 
   criarCredito(credito: Credito): Observable<Credito> {
